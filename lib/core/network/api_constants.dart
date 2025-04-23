@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ApiConstants {
+abstract class ApiConstants {
   static const String baseUrl = 'https://api.themoviedb.org/3';
   static  String? apiKey  = dotenv.env['API_KEY'] ??'';
 

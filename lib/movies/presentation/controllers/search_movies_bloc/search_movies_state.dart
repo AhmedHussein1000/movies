@@ -3,7 +3,6 @@ part of 'search_movies_bloc.dart';
 sealed class SearchMoviesState {
   const SearchMoviesState();
 }
-
 final class SearchMoviesInitial extends SearchMoviesState {}
 
 final class SearchMoviesLoading extends SearchMoviesState {}

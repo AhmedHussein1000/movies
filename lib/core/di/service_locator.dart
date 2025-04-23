@@ -18,18 +18,15 @@ abstract class ServiceLocator {
   static void setup() {
     //services
     getIt.registerLazySingleton(
-      () => HiveHelper(),
-    );
-    getIt.registerLazySingleton(
       () => ApiService(),
     );
 
     // data sources
     getIt.registerLazySingleton<BaseMoviesRemoteDataSource>(
-      () => MoviesRemoteDataSource(getIt(), getIt()),
+      () => MoviesRemoteDataSource(getIt()),
     );
     getIt.registerLazySingleton<BaseMoviesLocalDataSource>(
-      () => MoviesLocalDataSource(getIt()),
+      () => MoviesLocalDataSource(),
     );
 
     // repositories

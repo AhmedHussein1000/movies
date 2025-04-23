@@ -20,41 +20,40 @@ abstract class BaseMoviesLocalDataSource {
 }
 
 class MoviesLocalDataSource extends BaseMoviesLocalDataSource {
-  final HiveHelper hiveHelper;
-
-  MoviesLocalDataSource(this.hiveHelper);
+  
+  MoviesLocalDataSource();
 
   @override
   Future<MoviesResponseEntity?> getNowPlayingMovies(
       GetNowPlayingMoviesParams parameters) async{
-    return await hiveHelper.getItemData<MoviesResponseEntity>(
+    return await HiveHelper.getItemData<MoviesResponseEntity>(
         boxName: CacheConstants.nowPlayingBox,
-        key: hiveHelper.getKey(page: parameters.page));
+        key: HiveHelper.getKey(page: parameters.page));
   }
 
   @override
   Future<MoviesResponseEntity?> getPopularMovies(GetPopularMoviesParams parameters) async{
-    return await hiveHelper.getItemData<MoviesResponseEntity>(
+    return await HiveHelper.getItemData<MoviesResponseEntity>(
         boxName: CacheConstants.popularBox,
-        key: hiveHelper.getKey(page: parameters.page));
+        key: HiveHelper.getKey(page: parameters.page));
   }
 
   @override
   Future<MoviesResponseEntity?> getTopRatedMovies(GetTopRatedMoviesParams parameters) async{
-    return await hiveHelper.getItemData<MoviesResponseEntity>(
+    return await HiveHelper.getItemData<MoviesResponseEntity>(
         boxName: CacheConstants.topRatedBox,
-        key: hiveHelper.getKey(page: parameters.page));
+        key: HiveHelper.getKey(page: parameters.page));
   }
 
   @override
   Future<MovieDetailsEntity?> getMovieDetails(GetMovieDetailsParams parameters) async{
-    return await hiveHelper.getItemData<MovieDetailsEntity>(
+    return await HiveHelper.getItemData<MovieDetailsEntity>(
         boxName: CacheConstants.movieDetailsBox, key: '${parameters.movieId}');
   }
   
   @override
  Future< RecommendationsResponseEntity?> getRecommendations(GetRecommendationsParams parameters) async{
-    return await hiveHelper.getItemData<RecommendationsResponseEntity>(
+    return await HiveHelper.getItemData<RecommendationsResponseEntity>(
         boxName: CacheConstants.recommendationBox,
         key: 'id${parameters.movieId}_page${parameters.page}');
   }

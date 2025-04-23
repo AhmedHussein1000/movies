@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/widgets/custom_text_field.dart';
@@ -15,7 +13,6 @@ class SearchMovieBody extends StatefulWidget {
 
 class _SearchMovieBodyState extends State<SearchMovieBody> {
     late final TextEditingController searchController;
-  Timer? _debounce;
   @override
   void initState() {
     super.initState();
@@ -26,15 +23,6 @@ class _SearchMovieBodyState extends State<SearchMovieBody> {
   void dispose() {
     super.dispose();
     searchController.dispose();
-  }
-
-  void _onSearchChanged(String query) {
-    if (_debounce?.isActive ?? false) {
-      _debounce!.cancel();
-    }
-    _debounce = Timer(const Duration(milliseconds: 2000), () {
-      context.read<SearchMoviesBloc>().add(GetSearchedMoviesEvent(query: query));
-    });
   }
 
   @override
@@ -59,7 +47,7 @@ class _SearchMovieBodyState extends State<SearchMovieBody> {
                       icon: const Icon(Icons.clear)),
                   onChanged: (value) {
                     searchController.text = value;
-                    _onSearchChanged(searchController.text);
+                   context.read<SearchMoviesBloc>().add(GetSearchedMoviesEvent(query: searchController.text));
                   },
                 ),
           const SizedBox(

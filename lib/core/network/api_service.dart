@@ -8,7 +8,8 @@ class ApiService {
     dio = Dio(BaseOptions(
         baseUrl: ApiConstants.baseUrl,
         receiveDataWhenStatusError: true,
-        connectTimeout: const Duration(seconds: 40)));
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30)));
   }
 
    Future<Response> getData(

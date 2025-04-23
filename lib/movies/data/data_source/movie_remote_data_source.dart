@@ -36,9 +36,9 @@ abstract class BaseMoviesRemoteDataSource {
 }
 
 class MoviesRemoteDataSource extends BaseMoviesRemoteDataSource {
-  final HiveHelper hiveHelper;
+
   final ApiService apiService;
-  MoviesRemoteDataSource(this.hiveHelper, this.apiService);
+  MoviesRemoteDataSource(this.apiService);
   @override
   Future<MoviesResponseEntity> getNowPlayingMovies(
       GetNowPlayingMoviesParams parameters) async {
@@ -52,14 +52,14 @@ class MoviesRemoteDataSource extends BaseMoviesRemoteDataSource {
       final moviesResponse =
           MoviesResponseModel.fromJson(response.data).toEntity();
       if (!moviesResponse.moviesList.isNullOrEmpty()) {
-        await hiveHelper.saveItemData<MoviesResponseEntity>(
+        await HiveHelper.saveItemData<MoviesResponseEntity>(
             data: MoviesResponseEntity(
                 moviesList: moviesResponse.moviesList,
                 totalPages: moviesResponse.totalPages,
                 totalResults: moviesResponse.totalResults,
                 timestamp: DateTime.now()),
             boxName: CacheConstants.nowPlayingBox,
-            key: hiveHelper.getKey(page: parameters.page));
+            key: HiveHelper.getKey(page: parameters.page));
       }
       return moviesResponse;
     } else {
@@ -80,14 +80,14 @@ class MoviesRemoteDataSource extends BaseMoviesRemoteDataSource {
       final moviesResponse =
           MoviesResponseModel.fromJson(response.data).toEntity();
       if (!moviesResponse.moviesList.isNullOrEmpty()) {
-        await hiveHelper.saveItemData<MoviesResponseEntity>(
+        await HiveHelper.saveItemData<MoviesResponseEntity>(
             data: MoviesResponseEntity(
                 moviesList: moviesResponse.moviesList,
                 totalPages: moviesResponse.totalPages,
                 totalResults: moviesResponse.totalResults,
                 timestamp: DateTime.now()),
             boxName: CacheConstants.popularBox,
-            key: hiveHelper.getKey(page: parameters.page));
+            key: HiveHelper.getKey(page: parameters.page));
       }
       return moviesResponse;
     } else {
@@ -108,14 +108,14 @@ class MoviesRemoteDataSource extends BaseMoviesRemoteDataSource {
       final moviesResponse =
           MoviesResponseModel.fromJson(response.data).toEntity();
       if (!moviesResponse.moviesList.isNullOrEmpty()) {
-        await hiveHelper.saveItemData<MoviesResponseEntity>(
+        await HiveHelper.saveItemData<MoviesResponseEntity>(
             data: MoviesResponseEntity(
                 moviesList: moviesResponse.moviesList,
                 totalPages: moviesResponse.totalPages,
                 totalResults: moviesResponse.totalResults,
                 timestamp: DateTime.now()),
             boxName: CacheConstants.topRatedBox,
-            key: hiveHelper.getKey(page: parameters.page));
+            key: HiveHelper.getKey(page: parameters.page));
       }
       return moviesResponse;
     } else {
@@ -136,7 +136,7 @@ class MoviesRemoteDataSource extends BaseMoviesRemoteDataSource {
       final recommendationsResponse =
           RecommendationsResponseModel.fromJson(response.data).toEntity();
       if (!recommendationsResponse.moviesList.isNullOrEmpty()) {
-        await hiveHelper.saveItemData<RecommendationsResponseEntity>(
+        await HiveHelper.saveItemData<RecommendationsResponseEntity>(
           data: RecommendationsResponseEntity(
               moviesList: recommendationsResponse.moviesList,
               totalPages: recommendationsResponse.totalPages,
@@ -162,7 +162,7 @@ class MoviesRemoteDataSource extends BaseMoviesRemoteDataSource {
     if (response.statusCode == 200) {
       MovieDetailsEntity movieDetails =
           MovieDetailsModel.fromJson(response.data).toEntity();
-      await hiveHelper.saveItemData<MovieDetailsEntity>(
+      await HiveHelper.saveItemData<MovieDetailsEntity>(
           data: MovieDetailsEntity(
               id: movieDetails.id,
               title: movieDetails.title,

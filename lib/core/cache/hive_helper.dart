@@ -10,7 +10,7 @@ import 'package:movies_app/movies/domain/entities/recommendations_response_entit
 class HiveHelper {
   static const _cacheDuration = Duration(days: 1);
 
-  Future<void> init() async {
+ static Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(MovieEntityAdapter());
     Hive.registerAdapter(MovieDetailsEntityAdapter());
@@ -37,7 +37,7 @@ class HiveHelper {
     }
   }
 
-  Future<void> saveItemData<T>({
+  static Future<void> saveItemData<T>({
     required T data,
     required String boxName,
     required String key,
@@ -46,7 +46,7 @@ class HiveHelper {
     await box.put(key, data);
   }
 
-  Future<T?> getItemData<T>(
+ static Future<T?> getItemData<T>(
       {required String boxName, required String key}) async {
     final box = Hive.box<T>(boxName);
     final item = box.get(key);
@@ -70,15 +70,15 @@ class HiveHelper {
     return item;
   }
 
-  bool _isCacheExpired(DateTime timestamp) {
+ static bool _isCacheExpired(DateTime timestamp) {
     final now = DateTime.now();
     final isExpired = now.difference(timestamp) > _cacheDuration;
     return isExpired;
   }
 
-  String getKey({required int? page}) => 'page$page';
+ static String getKey({required int? page}) => 'page$page';
 
-  Future<void> clearExpiredCache() async {
+static  Future<void> clearExpiredCache() async {
     final boxes = [
       CacheConstants.nowPlayingBox,
       CacheConstants.popularBox,

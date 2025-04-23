@@ -44,7 +44,6 @@ class MovieReleaseYearAndRate extends StatelessWidget {
               width: 4,
             ),
             Text(
-              // make it 1 decimal point
               rate.toStringAsFixed(1), style: Styles.styleRegular16(context),
             )
           ],
